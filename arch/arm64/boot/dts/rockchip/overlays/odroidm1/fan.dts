@@ -1,0 +1,60 @@
+/* Copyright ARC Data Shield 2023 */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/rockchip.h>
+#include <dt-bindings/thermal/thermal.h>
+
+/*
+    Add a PWM fan cooling device
+
+    PWM frequency = 100 kHz
+    4 cooling levels (percent of max. fan rotation speed):
+    - 0: 0%
+    - 102: 40%
+    - 170: 66%
+    - 230: 90%
+
+    We reuse the `threshold` trip point from the file `rk3568.dtsi`
+    to configure the temperature threshold + hysteresis. This trip
+    point was previously unused
+ */
+
+/ {
+    fragment@0 {
+        target-path = "/";
+
+        __overlay__ {
+            fan: fan {
+                status = "okay";
+                compatible = "pwm-fan";
+                pwms = <&pwm2 0 10000 0>;
+                #cooling-cells = <2>;
+                cooling-levels = <0 102 170 230>;
+            };
+        };
+    };
+
+    fragment@1 {
+        target-path = "/thermal-zones/soc-thermal/cooling-maps";
+
+        __overlay__ {
+            map2 {
+                trip = <&threshold>;
+                cooling-device = <&fan THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+            };
+        };
+    };
+
+    fragment@2 {
+        target = <&threshold>;
+
+        __overlay__ {
+            temperature = <40000>; /* millicelsius */
+            hysteresis = <2000>; /* millicelsius */
+            type = "active";
+        };
+    };
+};
