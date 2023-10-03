@@ -73,7 +73,7 @@
                 pinctrl-0 = <&gc9a01_pins>;
                 reset-gpios = <&gpio3 RK_PD0 GPIO_ACTIVE_LOW>;
                 dc-gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_LOW>;
-                spi-max-frequency = <40000000>;
+                spi-max-frequency = <8000000>;
                 buswidth = <8>;
                 width = <240>;
                 height = <240>;
