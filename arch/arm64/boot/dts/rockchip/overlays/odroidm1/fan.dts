@@ -30,7 +30,7 @@
             fan: fan {
                 status = "okay";
                 compatible = "pwm-fan";
-                pwms = <&pwm2 0 10000 0>;
+                pwms = <&pwm9 0 10000 0>;
                 #cooling-cells = <2>;
                 cooling-levels = <0 102 170 230>;
             };
