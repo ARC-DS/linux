@@ -26,7 +26,8 @@ dtbo-$(CONFIG_ARCH_ROCKCHIP_ODROIDM1) += \
 	uart0.dtbo \
 	uart1.dtbo \
 	fan.dtbo \
-	lcd.dtbo
+	lcd.dtbo \
+	status.dtbo
 
 targets += $(dtbo-y)
 always := $(dtbo-y)

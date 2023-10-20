@@ -1,0 +1,31 @@
+/* Copyright ARC Data Shield 2023 */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/pinctrl/rockchip.h>
+
+/*
+    Add a PWM controlled status LED
+
+    PWM frequency = 200 Hz
+ */
+
+/ {
+    fragment@0 {
+	target-path = "/";
+
+	__overlay__ {
+	    pwmleds {
+		compatible = "pwm-leds";
+
+                led-status {
+                    label = "status";
+                    pwms = <&pwm2 0 5000000 0>;
+                    max-brightness = <255>;
+                    active-low;
+                };
+	    };
+	};
+    };
+};
