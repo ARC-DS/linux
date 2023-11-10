@@ -147,6 +147,24 @@
         };
     };
 
+/*
+FIXME: this fragment is a hack to enable the display power supply early during
+kernel startup. The LCD kernel driver must be modified to implement the display
+power supply functionality (a power cycle requires a reset of the LCD
+controller). This new functionality shall take control of the DISP_EN pin.
+*/
+
+    fragment@1 {
+        target = <&leds>;
+
+        __overlay__ {
+            disp_en: disp {
+                gpios = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW>;
+                default-state = "on";
+            };
+        };
+    };
+
     __overrides__ {
         speed = <&gc9a01>,"spi-max-frequency:0";
         rotate = <&gc9a01>,"rotate:0";
