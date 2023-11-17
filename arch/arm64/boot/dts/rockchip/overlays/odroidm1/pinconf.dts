@@ -1,0 +1,43 @@
+/* Copyright ARC Data Shield 2023 */
+
+/*
+    Device Tree Overlay to configure gpio internal pull-up/down registers
+
+    This provides a known default state for applications and in case
+    applications fail to start.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/rockchip.h>
+
+/ {
+    fragment@0 {
+	target = <&pinctrl>;
+
+	__overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&pin_hog>;
+
+	    hog {
+		pin_hog: pin-hog {
+	            rockchip,pins =
+                        <RK_GPIO3 RK_PC6 RK_FUNC_GPIO &pcfg_pull_down>,  // OUT_A1
+                        <RK_GPIO3 RK_PC7 RK_FUNC_GPIO &pcfg_pull_down>,  // OUT_A2
+                        <RK_GPIO0 RK_PC0 RK_FUNC_GPIO &pcfg_pull_down>,  // OUT_B1
+                        <RK_GPIO0 RK_PC1 RK_FUNC_GPIO &pcfg_pull_down>,  // OUT_B2
+                        <RK_GPIO3 RK_PD3 RK_FUNC_GPIO &pcfg_pull_down>,  // IN_A1
+                        <RK_GPIO3 RK_PD4 RK_FUNC_GPIO &pcfg_pull_down>,  // IN_A2
+                        <RK_GPIO0 RK_PB4 RK_FUNC_GPIO &pcfg_pull_down>,  // IN_B1
+                        <RK_GPIO0 RK_PB5 RK_FUNC_GPIO &pcfg_pull_down>,  // IN_B2
+                        <RK_GPIO4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_down>,  // USB_SW1
+                        <RK_GPIO4 RK_PC1 RK_FUNC_GPIO &pcfg_pull_down>,  // USB_SW2
+                        <RK_GPIO0 RK_PB3 RK_FUNC_GPIO &pcfg_pull_up>,    // TP_INT#
+                        <RK_GPIO3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_up>;    // WAKE_INT#
+                };
+	    };
+	};
+    };
+};
